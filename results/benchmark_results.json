@@ -1,0 +1,99 @@
+{
+ "kind": "full",
+ "n_games": 1000,
+ "payload_bytes": 56,
+ "payload_bits_total": 480,
+ "global_seed": 20260913,
+ "steering": {
+  "beta": 1,
+  "window": 10
+ },
+ "corpus": "lichess_2013-01.pgn",
+ "summaries": {
+  "arm1_integer_baseline": {
+   "n": 1000,
+   "n_success": 952,
+   "capacity_failure_rate": 0.04800000000000004,
+   "decode_error_rate": 0.0,
+   "exact_match_rate": 1.0,
+   "mean_bpm": 4.2311893470245305,
+   "std_bpm": 0.1666267789413502,
+   "mean_plies": 113.62079831932773,
+   "mean_bits": 480.0,
+   "mean_runtime_s": 0.0910315329938767,
+   "std_runtime_s": 0.00990619970128831,
+   "mean_encode_s": 0.03621299115272886,
+   "mean_decode_s": 0.054818541841147844
+  },
+  "arm2_arithmetic_plain": {
+   "n": 1000,
+   "n_success": 963,
+   "capacity_failure_rate": 0.03700000000000003,
+   "decode_error_rate": 0.0,
+   "exact_match_rate": 1.0,
+   "mean_bpm": 4.74870318008277,
+   "std_bpm": 0.13431629284723198,
+   "mean_plies": 101.1619937694704,
+   "mean_bits": 480.0,
+   "mean_runtime_s": 0.08360501491505898,
+   "std_runtime_s": 0.009874537848469877,
+   "mean_encode_s": 0.03457020377992437,
+   "mean_decode_s": 0.04903481113513461
+  },
+  "arm3_arithmetic_steered": {
+   "n": 1000,
+   "n_success": 976,
+   "capacity_failure_rate": 0.02400000000000002,
+   "decode_error_rate": 0.0,
+   "exact_match_rate": 1.0,
+   "mean_bpm": 4.766220067681673,
+   "std_bpm": 0.1371091781379507,
+   "mean_plies": 100.79303278688525,
+   "mean_bits": 480.0,
+   "mean_runtime_s": 0.08380463700695011,
+   "std_runtime_s": 0.010295814551313823,
+   "mean_encode_s": 0.03468912345100553,
+   "mean_decode_s": 0.04911551355594458
+  }
+ },
+ "comparisons": {
+  "steered_vs_integer_baseline_bpm": {
+   "n_pairs": 928,
+   "mean_bpm_arm1_integer_baseline": 4.2316819809413255,
+   "mean_bpm_arm3_arithmetic_steered": 4.767736265588218,
+   "t_stat": 74.91673368983551,
+   "df": 927,
+   "p_value": 0.0,
+   "cohens_d": 2.4592622655785252
+  },
+  "steered_vs_integer_baseline_runtime": {
+   "n_pairs": 928,
+   "mean_runtime_s_arm1_integer_baseline": 0.09108579966950542,
+   "mean_runtime_s_arm3_arithmetic_steered": 0.08370447518299098,
+   "t_stat": -18.378166240723647,
+   "df": 927,
+   "p_value": 1.4617777521568866e-64,
+   "cohens_d": -0.6032928628930998
+  },
+  "steered_vs_arithmetic_plain_bpm": {
+   "n_pairs": 941,
+   "mean_bpm_arm2_arithmetic_plain": 4.749155630950152,
+   "mean_bpm_arm3_arithmetic_steered": 4.765704279232612,
+   "t_stat": 2.6260974879476975,
+   "df": 940,
+   "p_value": 0.008777434553980449,
+   "cohens_d": 0.08560833145594408
+  },
+  "plain_vs_integer_baseline_bpm": {
+   "n_pairs": 916,
+   "mean_bpm_arm1_integer_baseline": 4.233452238922836,
+   "mean_bpm_arm2_arithmetic_plain": 4.7483457286965844,
+   "t_stat": 74.99031314390967,
+   "df": 915,
+   "p_value": 0.0,
+   "cohens_d": 2.4777496889723656
+  }
+ },
+ "improvement_pct_vs_integer_baseline": 12.644925026420495,
+ "improvement_pct_vs_arithmetic_plain": 0.3688772899593573
+}

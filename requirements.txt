@@ -1,0 +1,6 @@
+# Runtime dependencies for the Python side (codec, benchmark, figures, tests).
+# The web app has no dependencies at all — web/vendor/chess.js is vendored.
+chess>=1.11
+
+# Test + tooling only.
+pytest>=8.0

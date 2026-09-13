@@ -1,0 +1,6 @@
+# Extra dependencies for regenerating the paper's figures.
+#   pip install -r requirements-dev.txt
+#   INCLUDE_ROWS=1 .venv/bin/python benchmark.py full 1000
+#   .venv/bin/python make_figures.py
+-r requirements.txt
+matplotlib>=3.7

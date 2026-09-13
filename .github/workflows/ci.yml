@@ -1,0 +1,165 @@
+name: CI
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  python:
+    name: Python codec (${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+
+      - name: Roundtrip and invariant tests
+        run: python -m pytest test_codec.py -q
+
+      - name: Import check
+        run: python -c "import codec, benchmark, test_codec, test_interop"
+
+  interop:
+    name: Python <-> JavaScript bit-compatibility
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+
+      - name: Cross-language interop
+        run: python -m pytest test_interop.py -q
+
+  javascript:
+    name: JavaScript codec
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: ["18", "20", "22"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Roundtrip fuzz
+        working-directory: web
+        run: node test_stego.mjs
+
+      - name: UI helper and codec-argument guards
+        working-directory: web
+        run: node test_dom.mjs
+
+  paper:
+    name: Paper builds
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install TeX Live
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            texlive-latex-base texlive-latex-recommended texlive-latex-extra \
+            texlive-fonts-recommended texlive-publishers texlive-science
+
+      - name: Check required LaTeX packages are present
+        working-directory: paper
+        run: |
+          for f in IEEEtran.cls algorithmic.sty placeins.sty adjustbox.sty \
+                   microtype.sty booktabs.sty; do
+            kpsewhich "$f" >/dev/null || { echo "missing LaTeX file: $f"; exit 1; }
+          done
+
+      - name: Build paper.pdf
+        working-directory: paper
+        run: |
+          pdflatex -interaction=nonstopmode -halt-on-error paper.tex
+          test -f paper.pdf
+
+  figures:
+    name: Figure pipeline
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-dev.txt
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements-dev.txt
+
+      - name: Import check
+        run: python -c "import make_figures"
+
+      - name: Missing-trajectory message is actionable
+        run: |
+          # The committed figures are the artifact of record; the per-ply data
+          # they need is too large to commit, so the failure path must tell the
+          # reader exactly how to regenerate it.
+          python make_figures.py 2>&1 | tee /dev/stderr | grep -q "INCLUDE_ROWS=1"
+
+  hygiene:
+    name: Repo hygiene
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: No files over 5 MB
+        run: |
+          big=$(git ls-files -z | xargs -0 du -b 2>/dev/null | awk '$1 > 5242880 {print $2}')
+          if [ -n "$big" ]; then
+            echo "Files over 5 MB are tracked (benchmark corpus, dumps, etc.):"
+            echo "$big"
+            exit 1
+          fi
+          echo "OK: no tracked file exceeds 5 MB"
+
+      - name: Vendored dependency license present
+        run: |
+          grep -q "@license" web/vendor/chess.js \
+            || { echo "web/vendor/chess.js lost its upstream license header"; exit 1; }
+          test -f NOTICE.md || { echo "NOTICE.md is missing"; exit 1; }
+          echo "OK: vendored dependency still carries its upstream license"

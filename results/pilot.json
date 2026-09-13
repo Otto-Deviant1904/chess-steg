@@ -1,0 +1,178 @@
+{
+ "kind": "pilot",
+ "n_games": 100,
+ "payload_bytes": 56,
+ "payload_bits_total": 480,
+ "global_seed": 20260913,
+ "steering": {
+  "beta": 1,
+  "window": 10
+ },
+ "corpus": "lichess_2013-01.pgn",
+ "min_success_threshold": 0.95,
+ "calibration": [
+  {
+   "payload_bytes": 64,
+   "payload_bits_total": 544,
+   "success_rates": {
+    "arm1_integer_baseline": 0.96,
+    "arm2_arithmetic_plain": 0.95,
+    "arm3_arithmetic_steered": 0.89
+   },
+   "min_success_rate": 0.89,
+   "accepted": false,
+   "summaries": {
+    "arm1_integer_baseline": {
+     "n": 100,
+     "n_success": 96,
+     "capacity_failure_rate": 0.040000000000000036,
+     "decode_error_rate": 0.0,
+     "exact_match_rate": 1.0,
+     "mean_bpm": 4.220052907733973,
+     "std_bpm": 0.17701512737630445,
+     "mean_plies": 129.13541666666666,
+     "mean_bits": 544.0,
+     "mean_runtime_s": 0.09743064554004377,
+     "std_runtime_s": 0.008865819816905748,
+     "mean_encode_s": 0.0368753068002358,
+     "mean_decode_s": 0.06055533873980797
+    },
+    "arm2_arithmetic_plain": {
+     "n": 100,
+     "n_success": 95,
+     "capacity_failure_rate": 0.050000000000000044,
+     "decode_error_rate": 0.0,
+     "exact_match_rate": 1.0,
+     "mean_bpm": 4.715979355577091,
+     "std_bpm": 0.15203149176263583,
+     "mean_plies": 115.47368421052632,
+     "mean_bits": 544.0,
+     "mean_runtime_s": 0.09009075070498511,
+     "std_runtime_s": 0.010076033863085502,
+     "mean_encode_s": 0.03560288651680917,
+     "mean_decode_s": 0.054487864188175944
+    },
+    "arm3_arithmetic_steered": {
+     "n": 100,
+     "n_success": 89,
+     "capacity_failure_rate": 0.10999999999999999,
+     "decode_error_rate": 0.0,
+     "exact_match_rate": 1.0,
+     "mean_bpm": 4.727525365208025,
+     "std_bpm": 0.1581219694127276,
+     "mean_plies": 115.20224719101124,
+     "mean_bits": 544.0,
+     "mean_runtime_s": 0.09083181526904319,
+     "std_runtime_s": 0.007117085810114674,
+     "mean_encode_s": 0.036016413323931774,
+     "mean_decode_s": 0.05481540194511141
+    }
+   }
+  },
+  {
+   "payload_bytes": 56,
+   "payload_bits_total": 480,
+   "success_rates": {
+    "arm1_integer_baseline": 0.97,
+    "arm2_arithmetic_plain": 0.98,
+    "arm3_arithmetic_steered": 0.98
+   },
+   "min_success_rate": 0.97,
+   "accepted": true,
+   "summaries": {
+    "arm1_integer_baseline": {
+     "n": 100,
+     "n_success": 97,
+     "capacity_failure_rate": 0.030000000000000027,
+     "decode_error_rate": 0.0,
+     "exact_match_rate": 1.0,
+     "mean_bpm": 4.246269614037017,
+     "std_bpm": 0.167254976409877,
+     "mean_plies": 113.21649484536083,
+     "mean_bits": 480.0,
+     "mean_runtime_s": 0.08528414944375232,
+     "std_runtime_s": 0.009566726498571923,
+     "mean_encode_s": 0.03330656906143407,
+     "mean_decode_s": 0.05197758038231825
+    },
+    "arm2_arithmetic_plain": {
+     "n": 100,
+     "n_success": 98,
+     "capacity_failure_rate": 0.020000000000000018,
+     "decode_error_rate": 0.0,
+     "exact_match_rate": 1.0,
+     "mean_bpm": 4.73851155396227,
+     "std_bpm": 0.14226256302889412,
+     "mean_plies": 101.38775510204081,
+     "mean_bits": 480.0,
+     "mean_runtime_s": 0.07846270803194635,
+     "std_runtime_s": 0.0072375444898860756,
+     "mean_encode_s": 0.032225933642844116,
+     "mean_decode_s": 0.04623677438910224
+    },
+    "arm3_arithmetic_steered": {
+     "n": 100,
+     "n_success": 98,
+     "capacity_failure_rate": 0.020000000000000018,
+     "decode_error_rate": 0.0,
+     "exact_match_rate": 1.0,
+     "mean_bpm": 4.756314289421729,
+     "std_bpm": 0.1261531928207869,
+     "mean_plies": 100.98979591836735,
+     "mean_bits": 480.0,
+     "mean_runtime_s": 0.07755478286648844,
+     "std_runtime_s": 0.007861265967962728,
+     "mean_encode_s": 0.031758608845922603,
+     "mean_decode_s": 0.045796174020565836
+    }
+   }
+  }
+ ],
+ "summaries": {
+  "arm1_integer_baseline": {
+   "n": 100,
+   "n_success": 97,
+   "capacity_failure_rate": 0.030000000000000027,
+   "decode_error_rate": 0.0,
+   "exact_match_rate": 1.0,
+   "mean_bpm": 4.246269614037017,
+   "std_bpm": 0.167254976409877,
+   "mean_plies": 113.21649484536083,
+   "mean_bits": 480.0,
+   "mean_runtime_s": 0.08528414944375232,
+   "std_runtime_s": 0.009566726498571923,
+   "mean_encode_s": 0.03330656906143407,
+   "mean_decode_s": 0.05197758038231825
+  },
+  "arm2_arithmetic_plain": {
+   "n": 100,
+   "n_success": 98,
+   "capacity_failure_rate": 0.020000000000000018,
+   "decode_error_rate": 0.0,
+   "exact_match_rate": 1.0,
+   "mean_bpm": 4.73851155396227,
+   "std_bpm": 0.14226256302889412,
+   "mean_plies": 101.38775510204081,
+   "mean_bits": 480.0,
+   "mean_runtime_s": 0.07846270803194635,
+   "std_runtime_s": 0.0072375444898860756,
+   "mean_encode_s": 0.032225933642844116,
+   "mean_decode_s": 0.04623677438910224
+  },
+  "arm3_arithmetic_steered": {
+   "n": 100,
+   "n_success": 98,
+   "capacity_failure_rate": 0.020000000000000018,
+   "decode_error_rate": 0.0,
+   "exact_match_rate": 1.0,
+   "mean_bpm": 4.756314289421729,
+   "std_bpm": 0.1261531928207869,
+   "mean_plies": 100.98979591836735,
+   "mean_bits": 480.0,
+   "mean_runtime_s": 0.07755478286648844,
+   "std_runtime_s": 0.007861265967962728,
+   "mean_encode_s": 0.031758608845922603,
+   "mean_decode_s": 0.045796174020565836
+  }
+ }
+}

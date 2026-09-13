@@ -1,0 +1,12 @@
+{
+  "name": "chess-steg-web",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Browser app and JavaScript codec for chess-steg. No dependencies, no build step: web/vendor/chess.js is vendored and web/index.html is loaded directly.",
+  "type": "module",
+  "scripts": {
+    "test": "node test_stego.mjs",
+    "serve": "python3 -m http.server 8642"
+  },
+  "license": "MIT"
+}

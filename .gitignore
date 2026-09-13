@@ -1,0 +1,55 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtualenvs
+.venv/
+venv/
+env/
+
+# Build / packaging
+build/
+dist/
+*.egg-info/
+
+# LaTeX by-products (the committed .pdf is the artifact of record)
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.bbl
+paper/*.blg
+paper/*.toc
+paper/*.synctex.gz
+paper/*.fls
+paper/*.fdb_latexmk
+
+# Editor / OS
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Benchmark corpus: fetched, not committed. See scripts/fetch_corpus.sh
+data/*.pgn
+data/*.pgn.zst
+data/*.pgn.zst.*
+
+# Local scratch outputs
+*.out.csv
+/notes/
+results/benchmark_rows.json
+
+# Demo payload scratch (see examples/ for the committed sample)
+secret.txt
+decoded_secret.txt
+
+# Stale duplicate figures. make_figures.py writes to paper/figs/ only, since the
+# paper is the sole consumer; an older copy may linger from a previous layout.
+results/figs/
+
+# Session working notes. Local only — deliberately not published; the commit
+# history is the durable record. See NOTES.md.
+NOTES.md

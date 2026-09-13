@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Chess Steg — covert channel over the board</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="frame">
+  <header class="masthead">
+    <div class="masthead-title">
+      <span class="knight-glyph">&#9822;</span>
+      <h1>Chess Steg</h1>
+      <p class="tagline">A carrier game that swallows your message, move by move.</p>
+    </div>
+    <div class="masthead-meta">
+      <span class="stamp">TRUE ARITHMETIC CODER</span>
+      <span class="stamp stamp-ghost">PAWN-PUSH STEERING</span>
+    </div>
+  </header>
+
+  <main class="workbench">
+    <!-- ── Board column ─────────────────────────────── -->
+    <section class="board-column" aria-label="Chessboard">
+      <div class="board-wrap">
+        <div id="board" class="board"></div>
+      </div>
+      <div class="board-tools">
+        <button id="btn-flip" class="tool" type="button">Flip</button>
+        <button id="btn-new" class="tool" type="button">New game</button>
+        <button id="btn-undo" class="tool" type="button">Undo</button>
+        <label class="speed">
+          pace
+          <input id="speed" type="range" min="60" max="900" value="380" step="20" />
+        </label>
+      </div>
+      <div id="move-log" class="move-log" aria-label="Move log"></div>
+    </section>
+
+    <!-- ── Operation column ─────────────────────────── -->
+    <section class="panel-column">
+      <nav class="tabs" role="tablist">
+        <button id="tab-hide" class="tab is-active" role="tab" type="button">Hide a message</button>
+        <button id="tab-reveal" class="tab" role="tab" type="button">Reveal a message</button>
+      </nav>
+
+      <!-- HIDE -->
+      <div id="view-hide" class="view">
+        <label class="field-label" for="secret">Message to bury in the game</label>
+        <textarea id="secret" class="secret-input" rows="3" maxlength="1024"
+          placeholder="Type the secret. It becomes the move sequence — nothing else is transmitted."></textarea>
+
+        <details class="options" open>
+          <summary>Coder settings</summary>
+          <div class="option-row">
+            <label class="switch">
+              <input id="opt-steer" type="checkbox" checked />
+              <span>Pawn-push steering</span>
+            </label>
+            <span class="hint">biases early pawn pushes toward richer positions</span>
+          </div>
+          <div class="option-row">
+            <label>bias &beta;
+              <input id="opt-beta" type="number" min="0" max="8" step="1" value="1" />
+            </label>
+            <label>window W
+              <input id="opt-window" type="number" min="1" max="40" step="1" value="10" />
+            </label>
+            <label class="switch">
+              <input id="opt-codec" type="checkbox" checked />
+              <span>true arithmetic</span>
+            </label>
+          </div>
+          <p class="hint">Decoder must use identical settings — they travel in the PGN headers.</p>
+        </details>
+
+        <button id="btn-encode" class="cta" type="button">Hide message</button>
+        <div class="progress" id="encode-progress" hidden>
+          <div class="progress-bar"><div id="encode-bar"></div></div>
+          <p id="encode-progress-text" class="progress-text"></p>
+        </div>
+        <div id="encode-result" class="result" hidden>
+          <label class="field-label" for="pgn-out">Carrier game — send this PGN</label>
+          <textarea id="pgn-out" rows="6" readonly></textarea>
+          <button id="btn-copy" class="tool" type="button">Copy PGN</button>
+        </div>
+      </div>
+
+      <!-- REVEAL -->
+      <div id="view-reveal" class="view" hidden>
+        <label class="field-label" for="pgn-in">Paste the carrier game</label>
+        <textarea id="pgn-in" class="secret-input" rows="7"
+          placeholder="[Event &quot;Steganographic chess&quot;]&#10;[StegoMode &quot;steered&quot;]&#10;&#10;1. e4 e5 2. Nf3 ..."></textarea>
+        <button id="btn-decode" class="cta" type="button">Extract message</button>
+        <div class="progress" id="decode-progress" hidden>
+          <div class="progress-bar"><div id="decode-bar"></div></div>
+          <p id="decode-progress-text" class="progress-text"></p>
+        </div>
+        <div id="decode-result" class="result" hidden>
+          <p class="field-label">Recovered message</p>
+          <p id="decoded-text" class="decoded-text"></p>
+          <p id="decode-stats" class="hint"></p>
+        </div>
+      </div>
+
+      <!-- Ledger (shared) -->
+      <div class="ledger-block">
+        <p class="field-label">Redaction ledger</p>
+        <div id="ledger" class="ledger" aria-live="polite"></div>
+        <p id="ledger-hint" class="hint">Every character costs 8 bits. Tiles ink out as the coder absorbs them.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="statusline">
+    <span id="st-ply">ply 0</span>
+    <span id="st-turn">white to move</span>
+    <span id="st-bits">0 bits embedded</span>
+    <span id="st-bpm">— bits/move</span>
+    <span id="st-state"></span>
+  </footer>
+
+  <div id="toast" class="toast" hidden></div>
+  <div id="promo" class="promo" hidden>
+    <div class="promo-card">
+      <p class="field-label">Promote to</p>
+      <div class="promo-row">
+        <button data-promo="q" type="button">&#9819;</button>
+        <button data-promo="r" type="button">&#9820;</button>
+        <button data-promo="b" type="button">&#9821;</button>
+        <button data-promo="n" type="button">&#9822;</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>

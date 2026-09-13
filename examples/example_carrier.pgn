@@ -1,0 +1,13 @@
+[Event "Steganographic chess"]
+[Site "?"]
+[Date "????.??.??"]
+[Round "?"]
+[White "?"]
+[Black "?"]
+[Result "*"]
+[StegoCodec "arithmetic"]
+[StegoMode "steered"]
+[StegoBeta "1"]
+[StegoWindow "10"]
+
+1. a3 a5 2. Ra2 a4 3. Ra1 Ra6 4. c4 h6 5. b3 d6 6. d4 Rc6 7. b4 Rc5 8. Bb2 Bf5 9. Nf3 Bh3 10. Ra2 Nf6 11. g3 Nbd7 12. Kd2 Rf5 13. Qxa4 Bg2 14. e3 Bxf3 15. Qb3 Rh7 16. b5 c5 17. Ke1 Ng4 18. Qd3 Qa5+ 19. Nd2 Nde5 20. e4 Bd1 21. f4 Qxd2+ 22. Kxd2 Kd7 23. Bc3 Nf3+ 24. Kxd1 Nfe5 25. Bb2 d5 *
